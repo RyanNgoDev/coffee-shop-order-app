@@ -1,0 +1,34 @@
+<mat-sidenav-container class="sidenav-container" *ngIf="isLoggedIn$ | async as isLoggedIn; else loginRouter">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="'dialog'"
+      [mode]="'side'"
+      [opened]="false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" (click)="drawer.toggle()">Trang chủ</a>
+      <a *ngIf="user?.isAdmin" mat-list-item routerLink="/products" (click)="drawer.toggle()">Sản phẩm</a>
+      <a mat-list-item routerLink="/order-list" (click)="drawer.toggle()">Hoá đơn</a>
+      <a mat-list-item (click)="logout(); drawer.toggle()">Đăng xuất</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Orders</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<ng-template #loginRouter>
+  <router-outlet></router-outlet>
+</ng-template>
+<div class="loading-shade"
+    *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+</div>

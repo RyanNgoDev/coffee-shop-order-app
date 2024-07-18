@@ -1,0 +1,30 @@
+
+<section id="bar-section">
+    <div class="flex-space">
+        <span>Bàn {{order?.table}}</span>
+        <span>Số HĐ {{order?.orderId}}</span>
+    </div>
+    <table>
+        <thead class="table-header">
+            <tr>
+                <th>
+                    Tên món
+                </th>
+                <th>
+                    SL
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let detail of order?.receiptDetails">
+                <td class="product-name">
+                    <div>{{detail.product.name}}</div>
+                    <div *ngIf="detail.note && detail.note !== ''" class="detail-note">--- {{detail.note}}</div>
+                </td>
+                <td class="quantity">
+                    {{detail.quantity}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

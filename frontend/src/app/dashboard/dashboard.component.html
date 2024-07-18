@@ -1,0 +1,38 @@
+<div *ngIf="!shift; else existedShift" class="shift-container">
+    <button *ngIf="isShiftLoaded" mat-raised-button color="primary" (click)="openShift()">MỞ CA</button>
+</div>
+
+<ng-template #existedShift>
+    <ng-container *ngIf="shift?.isActive; else inActiveShift">
+        <div class="table-list">
+            <div class="row tables-container">
+                <div class="col-12 col-sm-6 col-md-3 col-xl-2 table-item-container" *ngFor="let table of tables">
+                    <a routerLink="/detail/{{table.id}}"
+                        mat-raised-button class="table-item">
+                        <div class="table-name-time"><span>Bàn {{table.name}}</span><span>{{table.time | date: "hh:mm"}}</span></div>
+                        <div class="table-name-time">
+                            <span>T.Tiền: {{table.order?.summary ?? 0 | comma}}đ</span>
+                            <span *ngIf="table.order?.printCount" class="print-status">Đã xuất HĐ</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-2 col-md-3 col-sm-6 col-12">
+                    <a routerLink="/detail/0"
+                        mat-raised-button class="table-item add-table">
+                        <i class="bi-plus-circle" style="font-size: 3rem; color: rgb(100, 237, 118);"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- <button (click)="clear()">Clear</button> -->
+        </div>
+        <div class="close-shift">
+            <button mat-raised-button color="warn" (click)="closeShift()">KẾT CA</button>
+        </div>
+    </ng-container>
+    <ng-template #inActiveShift>
+        <div class="shift-container">
+            <p class="close-shift-text">Ca làm việc đã hết hạn, vui lòng kết ca</p>
+            <button mat-raised-button color="warn" (click)="closeShift()">KẾT CA</button>
+        </div>
+    </ng-template>
+</ng-template>

@@ -1,0 +1,82 @@
+<div class="row page-container">
+    <section class="product-detail col-xl-3 col-md-4 col-6">
+        <mat-card class="product-card">
+            <mat-card-header>
+              <mat-card-title>Thông tin sản phẩm</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="form" (ngSubmit)="submit(formDirective)" #formDirective="ngForm">
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tên món</mat-label>
+                            <input type="text" [(ngModel)]="selectedProduct.name" matInput formControlName="name" [errorStateMatcher]="matcher">
+                            <mat-error *ngIf="form.controls['name'].hasError('required')">
+                                Vui lòng nhập <strong>Tên sản phẩm!</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </p>
+                  
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Đơn giá</mat-label>
+                            <input type="number" [(ngModel)]="selectedProduct.price" matInput formControlName="price" [errorStateMatcher]="matcher">
+                            <mat-error *ngIf="form.controls['price'].hasError('required')">
+                                Vui lòng nhập <strong>Đơn giá!</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </p>
+
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Danh mục</mat-label>
+                            <mat-select [(ngModel)]="selectedProduct.categoryId" formControlName="category" [errorStateMatcher]="matcher">
+                                <mat-option>Chọn danh mục</mat-option>
+                                <mat-option *ngFor="let category of categoryList" [value]="category.id">{{category.name}}</mat-option>
+                            </mat-select>
+                            <mat-error  *ngIf="form.controls['category'].hasError('required')">
+                                Vui lòng chọn <strong>Danh mục!</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </p>
+                  
+                    <div class="button">
+                        <button mat-raised-button color="primary" type="submit" >Lưu</button>
+                    </div>
+                  
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </section>
+    <section class="product-list col-xl-9 col-md-8 col-6">
+        <mat-form-field appearance="standard" appearance="fill">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Nhập tên món" #input>
+        </mat-form-field>
+        <div class="table-container">
+            <table mat-table [dataSource]="productsDataSource" class="table-products">
+                        
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Tên món</th>
+                    <td mat-cell *matCellDef="let row">{{row.name}}</td>
+                </ng-container>
+        
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef>Đơn giá</th>
+                    <td mat-cell *matCellDef="let row">{{row.price | comma}}</td>
+                </ng-container>
+        
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef>Danh mục</th>
+                    <td mat-cell *matCellDef="let row">{{row.categoryId | category}}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row
+                (click)="selectProduct(row)"
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="3">Không tồn tại món "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</div>

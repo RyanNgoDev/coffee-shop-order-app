@@ -1,0 +1,47 @@
+table.table-orders {
+    width: 100%;
+}
+
+table.table-details {
+    width: 60%;
+}
+
+tr.order-detail-row {
+    height: 0;
+}
+
+tr.order-row:not(.order-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.order-row:not(.order-expanded-row):active {
+    background: #efefef;
+}
+
+.order-row td {
+    border-bottom-width: 0;
+}
+
+.order-detail {
+    overflow: hidden;
+}
+
+.order-detail-item {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 35px;
+    font-weight: 500;
+    padding: 20px 5px;
+}
+
+.table-container {
+    position: relative;
+    overflow: auto;
+    max-height: 800px;
+}

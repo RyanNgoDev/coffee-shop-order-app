@@ -1,0 +1,8 @@
+<div *ngIf="coupons.length > 0; else noData">
+    <button mat-button color="success" *ngFor="let coupon of coupons" (click)="selectCoupon(coupon)">
+        {{coupon.code}} - GIẢM {{coupon.discountPercent}}%
+    </button>
+</div>
+<ng-template #noData>
+    Không có ưu đãi nào
+</ng-template>

@@ -1,0 +1,25 @@
+<section class="product-list">
+    <mat-form-field appearance="standard" appearance="fill">
+        <input matInput [(ngModel)]="nameFilter" (keyup)="applyFilter()" placeholder="Nhập tên món" #input>
+    </mat-form-field>
+    <div class="outside-container mat-elevation-z8">
+        <div class="table-container">
+            <table mat-table [dataSource]="productsDataSource" class="example-table">
+            
+                <ng-container matColumnDef="name">
+                    <td mat-cell *matCellDef="let row">{{row.name}}</td>
+                </ng-container>
+        
+                <tr mat-row
+                (click)="selectProduct(row); hasChanges=true"
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="2">Không tồn tại món "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+<section class="recipe">
+    
+</section>
